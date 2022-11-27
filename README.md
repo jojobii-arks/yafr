@@ -15,11 +15,21 @@ Deno/Typescript.
 - Deno: Runtime
 - Redis: Data persistence for relay members, recent errors, recent logs, etc.
 
-## Running
+## Dev Environment
+
+### Requirements
+
+- Deno
+- Docker
+
+### Initialization
 
 - `cp .env.example .env` and fill in the required fields.
 - Run `docker compose up -d` to run redis server (REDIS_PASSWORD is taken from
   .env, but can be overwritten via environment variable during execution)
+- Run `deno task watch` to run the dev server.
+
+---
 
 ## Endpoints
 
