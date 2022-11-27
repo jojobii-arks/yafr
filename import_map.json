@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "/": "./",
+    "./": "./",
+    "redis": "./src/lib/redis.ts"
+  }
+}

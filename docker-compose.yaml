@@ -1,0 +1,11 @@
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass ${REDIS_PASSWORD:?Must provide a REDIS_PASSWORD in environment}
+
+    volumes:
+      - redis-data:/data
+volumes:
+  redis-data:
