@@ -1,3 +1,9 @@
+# *STILL IN DEVELOPMENT. THIS DOES NOT WORK (yet)*
+
+I just want to code in public to hold myself accountable for this project.
+
+---
+
 # yafr-replica - Yet Another Fediverse Relay (Replica)
 
 1:1 implementation of
