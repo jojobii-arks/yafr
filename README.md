@@ -12,9 +12,18 @@ Deno/Typescript.
 ## Running
 
 - `cp .env.example .env` and fill in the required fields.
-- Run `docker compose up -d` to run redis server (REDIS_PASSWORD is taken from .env, but can be overwritten via environment variable during execution)
+- Run `docker compose up -d` to run redis server (REDIS_PASSWORD is taken from
+  .env, but can be overwritten via environment variable during execution)
 
 ## Endpoints
+
+### Business Logic
+
+- `GET /actor`
+- `POST /inbox`
+- `GET /nodeinfo/2.0.json`
+- `GET /.well-known/nodeinfo`
+- `GET /.well-known/webfinger`
 
 ### Meta
 
@@ -24,11 +33,3 @@ Deno/Typescript.
 - `GET /stats`
   - Show off relay stats for debugging purposes, including failure/success rates
     per target instance.
-
-### Business Logic
-
-- `GET /actor`
-- `POST /inbox`
-- `GET /nodeinfo/2.0.json`
-- `GET /.well-known/nodeinfo`
-- `GET /.well-known/webfinger`
