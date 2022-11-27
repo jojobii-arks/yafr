@@ -8,5 +8,8 @@
       "useTabs": false
     }
   },
-  "importMap": "./import_map.json"
+  "importMap": "./import_map.json",
+  "tasks": {
+    "watch": "deno run --allow-net --allow-env --allow-read --watch src/main.ts"
+  }
 }
