@@ -6,7 +6,7 @@ I just want to code in public to hold myself accountable for this project. 🤣
 
 # yafr-replica - Yet Another Fediverse Relay (Replica)
 
-1:1 implementation of
+(almost) 1:1 implementation of
 [animeirl's fork of pleroma/relay](https://git.pleroma.social/animeirl/relay) in
 Deno/Typescript.
 
