@@ -1,6 +1,6 @@
 # *STILL IN DEVELOPMENT. THIS DOES NOT WORK (yet)*
 
-I just want to code in public to hold myself accountable for this project.
+I just want to code in public to hold myself accountable for this project. 🤣
 
 ---
 
