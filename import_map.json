@@ -2,6 +2,6 @@
   "imports": {
     "/": "./",
     "./": "./",
-    "redis": "./src/lib/redis.ts"
+    "redis": "./src/clients/redis.ts"
   }
 }

@@ -28,7 +28,7 @@ Deno/Typescript.
 ### Business Logic
 
 - `GET /actor`
-- `GET /inbox`
+- `POST /inbox`
 - `GET /nodeinfo/2.0.json`
 - `GET /.well-known/nodeinfo`
 - `GET /.well-known/webfinger`
