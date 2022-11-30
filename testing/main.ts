@@ -1,6 +1,11 @@
 import { RSA } from "https://deno.land/x/god_crypto@v1.4.11/rsa.ts";
 import { RSAKey } from "https://deno.land/x/god_crypto@v1.4.11/src/rsa/rsa_key.ts";
 
+/**
+ * ! Context
+ * https://datatracker.ietf.org/doc/html/draft-cavage-http-signatures-08#appendix-C
+ */
+
 const publicKey = RSA.parseKey(Deno.readTextFileSync("testing/public.pem"));
 const privateKey = RSA.parseKey(Deno.readTextFileSync("testing/private.pem"));
 const privateKeyId = "Test";
