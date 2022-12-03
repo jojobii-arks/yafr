@@ -4,11 +4,12 @@ import { RSAKey } from "https://deno.land/x/god_crypto@v1.4.11/src/rsa/rsa_key.t
 /**
  * ! Context
  * https://datatracker.ietf.org/doc/html/draft-cavage-http-signatures-08#appendix-C
+ * https://github.dev/misskey-dev/misskey/blob/2037c83541f28f22c072d61fce7096c13e97d845/packages/backend/src/core/remote/activitypub/ApRequestService.ts#L19
  */
 
-const publicKey = RSA.parseKey(Deno.readTextFileSync("testing/public.pem"));
-const privateKey = RSA.parseKey(Deno.readTextFileSync("testing/private.pem"));
-const privateKeyId = "Test";
+// const publicKey = RSA.parseKey(Deno.readTextFileSync("testing/public.pem"));
+// const privateKey = RSA.parseKey(Deno.readTextFileSync("testing/private.pem"));
+// const privateKeyId = "Test";
 
 type Signed = {
   request: Request;
@@ -17,7 +18,9 @@ type Signed = {
   signatureHeader: string;
 };
 
-function lcObjectKey(src: Record<string, string>): Record<string, string> {
+export function lcObjectKey(
+  src: Record<string, string>,
+): Record<string, string> {
   const dst: Record<string, string> = {};
   for (
     const key of Object.keys(src).filter((x) =>
@@ -27,7 +30,10 @@ function lcObjectKey(src: Record<string, string>): Record<string, string> {
   return dst;
 }
 
-function genSigningString(request: Request, includeHeaders: string[]): string {
+export function genSigningString(
+  request: Request,
+  includeHeaders: string[],
+): string {
   const parsedHeaders = lcObjectKey(
     Object.fromEntries(request.headers.entries()),
   );
@@ -49,28 +55,7 @@ function genSigningString(request: Request, includeHeaders: string[]): string {
   return results.join("\n");
 }
 
-const url = new URL("https://example.com/foo?param=value&pet=dog#swag");
-
-const request = new Request(url, {
-  method: "POST",
-  headers: new Headers({
-    "Host": url.hostname,
-    "Date": "Thu, 05 Jan 2014 21:31:40 GMT",
-    "Content-Type": "application/json",
-    "Digest": "SHA-256=X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=",
-    "Content-Length": "18",
-  }),
-  body: `{"hello": "world"}`,
-});
-
-const signingString = genSigningString(
-  request,
-  ["(request-target)", "date", "host"],
-);
-
-console.log(signingString);
-
-async function signToRequest(
+export async function signToRequest(
   request: Request,
   privateKey: RSAKey,
   privateKeyId: string,
@@ -79,11 +64,13 @@ async function signToRequest(
   const signingString = genSigningString(request, includeHeaders);
 
   const signature = await new RSA(privateKey).sign(
-    new Uint8Array(signingString as unknown as ArrayBufferLike),
+    signingString,
     {
       hash: "sha256",
+      algorithm: "rsassa-pkcs1-v1_5",
     },
   ).then((raw) => raw.base64());
+
   const signatureHeader =
     `keyId="${privateKeyId}",algorithm="rsa-sha256",headers="${
       includeHeaders.join(" ")
@@ -106,11 +93,3 @@ async function signToRequest(
     signatureHeader,
   };
 }
-
-const signedRequest = await signToRequest(request, privateKey, privateKeyId, [
-  "(request-target)",
-  "host",
-  "date",
-]);
-
-console.log(signedRequest.request.headers.get("Signature"));
