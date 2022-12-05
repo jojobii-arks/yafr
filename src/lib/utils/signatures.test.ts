@@ -1,6 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 import { RSA } from "https://deno.land/x/god_crypto@v1.4.11/rsa.ts";
-import { signToRequest } from "./main.ts";
+import { signToRequest } from "./signatures.ts";
 
 const url = new URL("https://example.com/foo?param=value&pet=dog#swag");
 

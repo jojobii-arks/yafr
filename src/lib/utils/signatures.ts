@@ -18,7 +18,7 @@ type Signed = {
   signatureHeader: string;
 };
 
-export function lcObjectKey(
+function lcObjectKey(
   src: Record<string, string>,
 ): Record<string, string> {
   const dst: Record<string, string> = {};
