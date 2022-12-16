@@ -1,8 +1,13 @@
 import { connect } from "https://deno.land/x/redis@v0.27.4/mod.ts";
-const env = Deno.env.toObject();
 
+enum Key {
+  PEERS = "peers",
+}
+
+const env = Deno.env.toObject();
 const { REDIS_HOST, REDIS_PORT, REDIS_PASSWORD } = env;
 
+/** Check environment for required variables. */
 if (
   REDIS_HOST === undefined ||
   REDIS_PORT === undefined ||
@@ -19,6 +24,8 @@ if (
   });
 }
 
+console.log("Connecting to Redis Server...");
+
 const redis = await connect(
   {
     hostname: REDIS_HOST,
@@ -26,5 +33,8 @@ const redis = await connect(
     password: REDIS_PASSWORD,
   },
 );
+
+/** Audit database types prior to export. */
+if (await redis.type(Key.PEERS) !== "zset") await redis.del(Key.PEERS);
 
 export default redis;

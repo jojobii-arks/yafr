@@ -34,28 +34,25 @@ G6aFKaqQfOXKCyWoUiVknQJAXrlgySFci/2ueKlIE1QqIiLSZ8V8OlpFLRnb1pzI
 const privateKey = RSA.parseKey(privateKeyRaw);
 const privateKeyId = "Test";
 
-Deno.test({
-  name: `RSA signs HTTP Signature correctly`,
-  /**
-   * ? According to the following test:
-   * ? https://datatracker.ietf.org/doc/html/draft-cavage-http-signatures-08#appendix-C.3
-   */
-  async fn() {
-    const signedRequest = await signToRequest(
-      request,
-      privateKey,
-      privateKeyId,
-      [
-        "(request-target)",
-        "host",
-        "date",
-        "content-type",
-        "digest",
-        "content-length",
-      ],
-    );
-    const expected =
-      `keyId="Test",algorithm="rsa-sha256",headers="(request-target) host date content-type digest content-length",signature="Ef7MlxLXoBovhil3AlyjtBwAL9g4TN3tibLj7uuNB3CROat/9KaeQ4hW2NiJ+pZ6HQEOx9vYZAyi+7cmIkmJszJCut5kQLAwuX+Ms/mUFvpKlSo9StS2bMXDBNjOh4Auj774GFj4gwjS+3NhFeoqyr/MuN6HsEnkvn6zdgfE2i0="`;
-    assertEquals(signedRequest.signatureHeader, expected);
-  },
+Deno.test("signToRequest", () => {
+  signToRequest;
+});
+
+Deno.test("signToRequest - signs Request object to spec", async () => {
+  const signedRequest = await signToRequest(
+    request,
+    privateKey,
+    privateKeyId,
+    [
+      "(request-target)",
+      "host",
+      "date",
+      "content-type",
+      "digest",
+      "content-length",
+    ],
+  );
+  const expected =
+    `keyId="Test",algorithm="rsa-sha256",headers="(request-target) host date content-type digest content-length",signature="Ef7MlxLXoBovhil3AlyjtBwAL9g4TN3tibLj7uuNB3CROat/9KaeQ4hW2NiJ+pZ6HQEOx9vYZAyi+7cmIkmJszJCut5kQLAwuX+Ms/mUFvpKlSo9StS2bMXDBNjOh4Auj774GFj4gwjS+3NhFeoqyr/MuN6HsEnkvn6zdgfE2i0="`;
+  assertEquals(signedRequest.signatureHeader, expected);
 });

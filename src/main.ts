@@ -6,10 +6,22 @@ import {
   Request,
   Router,
 } from "https://deno.land/x/oak@v11.1.0/mod.ts";
+import { ActivityPub, WellKnown } from "npm:@musakui/fedi@0.0.11";
+import { contentType } from "https://deno.land/std@0.152.0/media_types/mod.ts";
 import redis from "redis";
+import { getPeers } from "./lib/queries/peers.ts";
+
+const { CONTENT_TYPE: ACTIVITY_JSON_TYPE } = ActivityPub;
 
 const app = new Application();
-const appVersion = "0.1";
+const metadata = {
+  softwareName: "yafr-replica",
+  appVersion: "0.1",
+  repository: "https://github.com/jojobii-arks/yafr-replica",
+  staffAccounts: [
+    "https://mk.arks.cafe/@jojobii",
+  ],
+};
 
 /** Error Catching */
 app.use(async (context, next) => {
@@ -66,7 +78,27 @@ const router = new Router();
 
 router.get("/actor", async ({ request, response }) => {
   // TODO: implement `GET /actor` endpoint
-  response.body = await redis.ping();
+  const actor = {
+    "@context": "https://www.w3.org/ns/activitystreams",
+    "endpoints": { "sharedInbox": `https://${request.url.host}/inbox"` },
+    "followers": `https://${request.url.host}/followers`,
+    "following": `https://${request.url.host}/following`,
+    "inbox": `https://${request.url.host}/inbox`,
+    "name": "ActivityRelay",
+    "type": "Application",
+    "id": `https://${request.url.host}/actor`,
+    "publicKey": {
+      "id": `https://${request.url.host}/actor#main-key`,
+      "owner": `https://${request.url.host}/actor`,
+      "publicKeyPem": Deno.env.get("PUBLIC_KEY_PEM"),
+    },
+    "summary": "ActivityRelay bot",
+    "preferredUsername": "relay",
+    "url": `https://${request.url.host}/actor`,
+  };
+  await redis.ping();
+  response.body = actor;
+  response.type = ACTIVITY_JSON_TYPE;
 });
 
 router.post("/inbox", async ({ request, response }) => {
@@ -78,20 +110,25 @@ router.post("/inbox", async ({ request, response }) => {
 
 router.get("/nodeinfo/2.0.json", async ({ request, response }) => {
   // TODO: implement `GET /nodeinfo/2.0.json` endpoint
-  const nodeInfo = {
+  const nodeInfo = WellKnown.defineNodeInfo({
     openRegistrations: true,
     protocols: ["activitypub"],
     services: { inbound: [], outbound: [] },
-    software: { name: "yafr-replica", "version": appVersion },
+    software: {
+      name: metadata.softwareName,
+      version: metadata.appVersion,
+      repository: metadata.repository,
+    },
     usage: { localPosts: 0, users: { total: 1 } },
     version: "2.0",
     metadata: {
-      peers: [
-        // TODO: fetch all peers from DB.
-      ],
+      peers: await getPeers(),
+      staffAccounts: metadata.staffAccounts,
     },
-  };
-  response.body = await redis.ping();
+  });
+  await redis.ping();
+  response.body = nodeInfo;
+  response.type = contentType("json");
 });
 
 router.get("/.well-known/nodeinfo", async ({ request, response }) => {
