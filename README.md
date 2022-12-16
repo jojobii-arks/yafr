@@ -37,17 +37,17 @@ Deno/Typescript.
 
 ### Business Logic
 
-- `GET /actor`
-- `POST /inbox`
-- `GET /nodeinfo/2.0.json`
-- `GET /.well-known/nodeinfo`
-- `GET /.well-known/webfinger`
+- [ ] `POST /inbox`
+- [x] `GET /actor`
+- [x] `GET /nodeinfo/2.0.json`
+- [x] `GET /.well-known/nodeinfo`
+- [x] `GET /.well-known/webfinger`
 
 ### Meta
 
-- `GET /`
+- [ ] `GET /`
   - Default endpoint. Description of relay, list of current subscribers and
     status.
-- `GET /stats`
+- [ ] `GET /stats`
   - Show off relay stats for debugging purposes, including failure/success rates
     per target instance.
