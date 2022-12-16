@@ -1,4 +1,7 @@
 import redis from "redis";
 export async function getPeers() {
-  return await redis.zrange("peers", 0, -1);
+  const x = await redis.zrange("relay-list", 0, -1);
+  return x.map((inbox) => {
+    return new URL(inbox).hostname;
+  });
 }

@@ -76,8 +76,14 @@ const router = new Router();
 
 //! Business Logic for MVP
 
+router.post("/inbox", async ({ request, response }) => {
+  // TODO: implement `POST /inbox` endpoint
+  const jsonBody = await parseJsonBody(request);
+  console.log(jsonBody);
+  response.body = jsonBody;
+});
+
 router.get("/actor", async ({ request, response }) => {
-  // TODO: implement `GET /actor` endpoint
   const actor = {
     "@context": "https://www.w3.org/ns/activitystreams",
     "endpoints": { "sharedInbox": `https://${request.url.host}/inbox"` },
@@ -101,15 +107,7 @@ router.get("/actor", async ({ request, response }) => {
   response.type = ACTIVITY_JSON_TYPE;
 });
 
-router.post("/inbox", async ({ request, response }) => {
-  // TODO: implement `POST /inbox` endpoint
-  const jsonBody = await parseJsonBody(request);
-  console.log(jsonBody);
-  response.body = jsonBody;
-});
-
-router.get("/nodeinfo/2.0.json", async ({ request, response }) => {
-  // TODO: implement `GET /nodeinfo/2.0.json` endpoint
+router.get("/nodeinfo/2.0.json", async ({ response }) => {
   const nodeInfo = WellKnown.defineNodeInfo({
     openRegistrations: true,
     protocols: ["activitypub"],
@@ -122,26 +120,52 @@ router.get("/nodeinfo/2.0.json", async ({ request, response }) => {
     usage: { localPosts: 0, users: { total: 1 } },
     version: "2.0",
     metadata: {
+      // TODO: ensure peers are properly formatted
       peers: await getPeers(),
       staffAccounts: metadata.staffAccounts,
     },
   });
-  await redis.ping();
   response.body = nodeInfo;
   response.type = contentType("json");
 });
 
-router.get("/.well-known/nodeinfo", async ({ request, response }) => {
-  // TODO: implement `GET /.well-known/nodeinfo` endpoint
-  response.body = await redis.ping();
+router.get("/.well-known/nodeinfo", ({ request, response }) => {
+  const wellKnownNodeInfo = {
+    links: [
+      {
+        "rel": "http://nodeinfo.diaspora.software/ns/schema/2.0",
+        "href": `https://${request.url.host}/nodeinfo/2.0.json`,
+      },
+    ],
+  };
+  response.body = wellKnownNodeInfo;
+  response.type = contentType("json");
 });
 
-router.get("/.well-known/webfinger", async ({ request, response }) => {
-  // TODO: implement `GET /.well-known/webfinger` endpoint
-  response.body = await redis.ping();
+router.get("/.well-known/webfinger", ({ request, response }) => {
+  const subject = request.url.searchParams.get("resource");
+  if (!subject) throw createHttpError(400);
+  if (subject !== `acct:relay@${request.url.host}`) {
+    throw createHttpError(404, "User Not Found");
+  }
+  const actorUri = `https://${request.url.host}/actor`;
+  const wf = WellKnown.defineWebFinger({
+    aliases: [actorUri],
+    links: [
+      { "href": actorUri, "rel": "self", "type": "application/activity+json" },
+      {
+        "href": actorUri,
+        "rel": "self",
+        "type":
+          'application/ld+json; profile="https://www.w3.org/ns/activitystreams"',
+      },
+    ],
+    subject: subject,
+  });
+  response.body = wf;
 });
 
-//!
+// ! Frontend for consumers.
 
 router.get("/", async ({ request, response }) => {
   // TODO: implement `GET /` endpoint
