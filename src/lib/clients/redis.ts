@@ -1,6 +1,6 @@
 import { connect } from "https://deno.land/x/redis@v0.27.4/mod.ts";
 
-enum Key {
+export enum Key {
   PEERS = "peers",
 }
 
