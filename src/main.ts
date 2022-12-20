@@ -9,7 +9,7 @@ import {
 import {
   ActivityPub,
   WellKnown,
-} from "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.0.11/lib/index.js";
+} from "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/index.js";
 import { contentType } from "https://deno.land/std@0.152.0/media_types/mod.ts";
 import redis from "redis";
 import { getPeers } from "./lib/queries/peers.ts";
