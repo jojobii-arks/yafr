@@ -1,6 +1,14 @@
 {
   "version": "2",
   "remote": {
+    "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/activitypub/core.js": "07b0a507b407670497e99a01e0024f4d1268ad4e3c2291964c6f26e4bc7a1c7c",
+    "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/activitypub/index.js": "47abddc0f91dd02465fb97a05b8a98ef07fe052ec140dcf51ace3f0ca6b86899",
+    "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/activitystreams/core.js": "d1d0b54474b1b414290ff56b8a83e61018d733ca12ff5e9c014e1c26371d192d",
+    "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/activitystreams/index.js": "f81da8cd9816e29ef964f98ace78075664e4a3c238b32a65db4859776ef95f61",
+    "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/index.js": "b8d57484d53e2e034f09b20c68e11e33de7ad1911d4fe5925aec69a96d20366c",
+    "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/well-known/index.js": "046905b64bc959c026c27b625d743448bc5afc60ec408fd3ba1c4f392a0a319b",
+    "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/well-known/nodeinfo.js": "be51df1bf90f85e64df57059609e1ec76b5984e1695c82b6e1c3647d01358367",
+    "https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/well-known/webfinger.js": "2a32cfe3ca24997788b36ada3d68e73db59849ba3324ebd6fb14ae8a6eca3561",
     "https://deno.land/std@0.152.0/_util/assert.ts": "e94f2eb37cebd7f199952e242c77654e43333c1ac4c5c700e929ea3aa5489f74",
     "https://deno.land/std@0.152.0/_util/os.ts": "3b4c6e27febd119d36a416d7a97bd3b0251b77c88942c8f16ee5953ea13e2e49",
     "https://deno.land/std@0.152.0/async/deferred.ts": "bc18e28108252c9f67dfca2bbc4587c3cbf3aeb6e155f8c864ca8ecff992b98a",
@@ -501,11 +509,16 @@
   "npm": {
     "specifiers": {
       "@musakui/fedi@0.0.11": "@musakui/fedi@0.0.11",
+      "@musakui/fedi@0.1.1": "@musakui/fedi@0.1.1",
       "activitypub-http-signatures": "activitypub-http-signatures@2.0.1"
     },
     "packages": {
       "@musakui/fedi@0.0.11": {
         "integrity": "sha512-7yy6P9Pvi+bHO2j4RsGIPKB9ZBpfBSauNZUt8WojnAWVnxztqGpBF7Inss6XVOmvQNgLE4/0H06hXaD9Ky4UcA==",
+        "dependencies": {}
+      },
+      "@musakui/fedi@0.1.1": {
+        "integrity": "sha512-KvJmqtIR70bMvpbcrAjjhEPvKmMamLtP7BTKck30elibsMsItC3zbL4SH8ZFUByr6UtP5ZHM4Y5ISLl2Dbb1QQ==",
         "dependencies": {}
       },
       "activitypub-http-signatures@2.0.1": {
