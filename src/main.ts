@@ -74,7 +74,7 @@ async function parseJsonBody(
 
 const router = new Router();
 
-//! Business Logic for MVP
+// ? Business Logic for MVP
 
 router.post("/inbox", async ({ request, response }) => {
   // TODO: implement `POST /inbox` endpoint
@@ -165,14 +165,14 @@ router.get("/.well-known/webfinger", ({ request, response }) => {
   response.body = wf;
 });
 
-// ! Frontend for consumers.
+// ? Frontend for consumers.
 
-router.get("/", async ({ request, response }) => {
+router.get("/", async ({ response }) => {
   // TODO: implement `GET /` endpoint
   response.body = await redis.ping();
 });
 
-router.get("/stats", async ({ request, response }) => {
+router.get("/stats", async ({ response }) => {
   // TODO: implement `GET /stats` endpoint
   response.body = await redis.ping();
 });
