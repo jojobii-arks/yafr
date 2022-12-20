@@ -6,12 +6,15 @@ import {
   Request,
   Router,
 } from "https://deno.land/x/oak@v11.1.0/mod.ts";
-import { ActivityPub, WellKnown } from "npm:@musakui/fedi@0.0.11";
+import {
+  ActivityPub,
+  WellKnown,
+} from "https://cdn.jsdelivr.net/gh/musakui/fedi/lib/index.js";
 import { contentType } from "https://deno.land/std@0.152.0/media_types/mod.ts";
 import redis from "redis";
-import { getPeers } from "./lib/queries/peers.ts";
+import { getPeers } from "$lib/queries/peers.ts";
 
-const { CONTENT_TYPE: ACTIVITY_JSON_TYPE } = ActivityPub;
+const ACTIVITY_JSON_TYPE = ActivityPub.CONTENT_TYPE;
 
 const app = new Application();
 const metadata = {
@@ -74,13 +77,19 @@ async function parseJsonBody(
 
 const router = new Router();
 
-//! Business Logic for MVP
+// ? Business Logic for MVP
 
 router.post("/inbox", async ({ request, response }) => {
   // TODO: implement `POST /inbox` endpoint
-  const jsonBody = await parseJsonBody(request);
-  console.log(jsonBody);
-  response.body = jsonBody;
+  const data = await parseJsonBody(request);
+  const instance = new URL(data.actor).hostname;
+
+  if (!data.actor) {
+    throw createHttpError(401);
+  }
+
+  console.log(data);
+  response.body = data;
 });
 
 router.get("/actor", async ({ request, response }) => {
@@ -165,7 +174,7 @@ router.get("/.well-known/webfinger", ({ request, response }) => {
   response.body = wf;
 });
 
-// ! Frontend for consumers.
+// ? Frontend for consumers.
 
 router.get("/", async ({ request, response }) => {
   // TODO: implement `GET /` endpoint
