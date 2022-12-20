@@ -1,5 +1,7 @@
-import { assertThrows } from "https://deno.land/std@0.152.0/testing/asserts.ts";
-import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
+import {
+  assertEquals,
+  assertThrows,
+} from "https://deno.land/std@0.167.0/testing/asserts.ts";
 
 import getActorInbox from "./getActorInbox.ts";
 
