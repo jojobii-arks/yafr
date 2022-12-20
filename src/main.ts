@@ -6,7 +6,7 @@ import {
   Request,
   Router,
 } from "https://deno.land/x/oak@v11.1.0/mod.ts";
-// @deno-types="https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/index.js"
+// @deno-types="https://cdn.jsdelivr.net/npm/@musakui/fedi@0.1.1/lib/types.d.ts"
 import { ActivityPub, WellKnown } from "npm:@musakui/fedi@0.1.1";
 import { contentType } from "https://deno.land/std@0.152.0/media_types/mod.ts";
 import redis from "redis";
