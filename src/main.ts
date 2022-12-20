@@ -168,12 +168,12 @@ router.get("/.well-known/webfinger", ({ request, response }) => {
 
 // ! Frontend for consumers.
 
-router.get("/", async ({ request, response }) => {
+router.get("/", async ({ request: _, response }) => {
   // TODO: implement `GET /` endpoint
   response.body = await redis.ping();
 });
 
-router.get("/stats", async ({ request, response }) => {
+router.get("/stats", async ({ request: _, response }) => {
   // TODO: implement `GET /stats` endpoint
   response.body = await redis.ping();
 });
