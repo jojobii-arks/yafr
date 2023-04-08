@@ -1,4 +1,4 @@
-# *STILL IN DEVELOPMENT. THIS DOES NOT WORK (yet)*
+# ~~STILL IN DEVELOPMENT. THIS DOES NOT WORK (yet)~~ i gave up lol
 
 I just want to code in public to hold myself accountable for this project. 🤣
 
